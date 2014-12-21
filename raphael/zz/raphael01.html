@@ -1,0 +1,96 @@
+<html>
+  <head>
+    <style>
+      body {
+       margin: 0px;
+       padding: 0px;
+     }
+    </style>
+    <script src="jquery.js"></script>
+  </head>
+  <body>
+      <br>
+      <br>
+    <audio id="sound1" controls="controls">
+      <source src="poussiere.wav"/>
+    </audio>
+    <br><br>
+    <audio id="sound2" controls="controls">
+        <source src="sarah.wav"/>
+    </audio>
+
+    <script>
+     var context, source, media, splitter, merger, gain0, gain1
+
+
+     $(function(){
+       context = new AudioContext()
+       context.destination.channelCountMode = "explicit"
+       context.destination.channelCount = 12
+       console.log(context.destination.maxChannelCount)
+       console.log(context.destination.channelCount)
+
+       gain0 = context.createGain()
+       gain1 = context.createGain()
+       gain1.channelCountMode = "explicit"
+       gain1.channelCount = 1
+       gain2 = context.createGain()
+
+       media1 = document.getElementById('sound1')
+       media1.loop = true
+       source1 = context.createMediaElementSource(media1)
+       console.log(source1.channelCount)
+       console.log(gain1.channelCount)
+//
+//       media2 = document.getElementById('sound2')
+//       media2.loop = true
+//       source2 = context.createMediaElementSource(media2)
+//       
+       splitter1 = context.createChannelSplitter(2)
+       source1.connect(splitter1)
+       splitter1.connect(gain1,0)
+       splitter1.connect(gain0,1)
+//
+        merger = context.createChannelMerger()
+        merger.channelCountMode = "explicit"
+        merger.channelCount = 12
+//
+        //gain1.connect(merger, 0, 0)
+        gain1.connect(merger, 0, 0)
+        gain1.connect(merger, 0, 1)
+       
+        gain1.gain.value = 0.1
+//       gain0.connect(merger, 0, 1)
+//       gain0.connect(merger, 0, 2)
+//
+       console.log(context.destination.channelCount)
+       console.log(merger.channelCount)
+        merger.connect(context.destination)
+        source1.mediaElement.play()
+       
+       //
+//       // source.channelInterpretation = 'discrete'
+////       splitter = context.createChannelSplitter(1)
+//       merger = context.createChannelMerger(2)
+//
+////       source.connect(splitter)
+////
+////       splitter.connect(gain1,0)
+////       splitter.connect(gain2,1)
+//
+//       gain1.connect(merger, 0, 0)
+//       //gain2.connect(merger, 0, 1)
+//       // gain1.connect(merger, 0, 1)
+//
+//       gain1.gain.value = 1
+//       gain2.gain.value = 1
+//
+//       merger.connect(context.destination)
+//
+//       source1.mediaElement.play()
+//       source2.mediaElement.play()
+
+     })
+    </script>
+  </body>
+</html>
