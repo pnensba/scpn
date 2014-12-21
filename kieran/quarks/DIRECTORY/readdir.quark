@@ -1,0 +1,9 @@
+(
+        name: "readdir",
+        path: "readdir",
+        summary: "taken from Wouter Snoei",
+        author:  "vincent rioux",
+        version: 0.1,
+        helpdoc: "",
+        url: "",
+)
